@@ -1,30 +1,46 @@
 /**
  * @file app.js
  * @description Configures core application framework settings for Express.js.
- * @responsibility Sets up security middlewares (Helmet), API call logger (Morgan), request parses, CORS settings, maps base API routes, and mounts the central error handler.
+ * @responsibility Sets up security middlewares (Helmet), API call logger (Morgan), request parsers, CORS settings, maps base API routes, and mounts the central error handler.
  */
 
-// Placeholder imports
-// const express = require('express');
-// const cors = require('cors');
-// const helmet = require('helmet');
-// const morgan = require('morgan');
-// const routes = require('./routes');
-// const errorHandler = require('./middleware/errorHandler');
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const routes = require('./routes');
+const errorHandler = require('./middleware/errorHandler');
 
-// TODO: Instantiation
-// const app = express();
+const app = express();
 
-// TODO: Middlewares loading
-// app.use(helmet());
-// app.use(cors());
-// app.use(express.json());
-// app.use(morgan('dev'));
+// Security middleware
+app.use(helmet());
 
-// TODO: API routes mapping
-// app.use('/api', routes);
+// Enable CORS
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    credentials: true
+  })
+);
 
-// TODO: Error handler mounting
-// app.use(errorHandler);
+// Body parser
+app.use(express.json());
 
-module.exports = {};
+// Request logger for development
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
+// API routes mapping
+app.use('/api', routes);
+
+// Base health check route
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date() });
+});
+
+// Central error handler mounting
+app.use(errorHandler);
+
+module.exports = app;

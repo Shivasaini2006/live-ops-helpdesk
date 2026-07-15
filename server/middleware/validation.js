@@ -4,8 +4,8 @@
  * @responsibility Evaluates validation results; if violations exist, it halts execution and replies with standard validation failure messages.
  */
 
-// Placeholder for express-validator import
-// const { validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
+const Response = require('../utils/response');
 
 /**
  * Middleware function that runs validation rules and checks if any errors occurred.
@@ -14,8 +14,15 @@
  * @param {function} next - Express next function.
  */
 const validate = (req, res, next) => {
-  // TODO: Check validationResult(req)
-  // If there are errors, return a structured validation response, otherwise call next()
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return Response.error(
+      res,
+      'Validation failed',
+      errors.array().map((err) => ({ field: err.path, message: err.msg })),
+      400
+    );
+  }
   next();
 };
 

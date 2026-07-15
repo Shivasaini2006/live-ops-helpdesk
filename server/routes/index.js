@@ -1,17 +1,18 @@
 /**
  * @file index.js
  * @description API router entry point routing traffic to domain routes.
- * @responsibility Consolidates auth and ticket endpoints under standard endpoints structures (e.g., /api/auth, /api/tickets).
+ * @responsibility Consolidates auth and ticket endpoints under standard endpoint structures.
  */
 
-// Placeholder for express and routes imports
-// const express = require('express');
-// const authRoutes = require('./auth.routes');
-// const ticketRoutes = require('./ticket.routes');
+const express = require('express');
+const authRoutes = require('./auth.routes');
 
-// TODO: Define subroutes mapping
-// const router = express.Router();
-// router.use('/auth', authRoutes);
+const router = express.Router();
+
+router.use('/auth', authRoutes);
+
+// TODO: Mount ticket routes once implemented
+// const ticketRoutes = require('./ticket.routes');
 // router.use('/tickets', ticketRoutes);
 
-module.exports = {};
+module.exports = router;

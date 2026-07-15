@@ -4,8 +4,7 @@
  * @responsibility Decouples token creation and verification logic from routes, controllers, and middleware.
  */
 
-// Placeholder for jsonwebtoken import
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 /**
  * Generates a signed JWT payload for the user session.
@@ -13,8 +12,17 @@
  * @returns {string} The signed JWT.
  */
 const generateToken = (user) => {
-  // TODO: Sign payload using jwt.sign and secret key
-  return '';
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET environment variable is missing.');
+  }
+
+  // Generate token containing userId and role
+  return jwt.sign(
+    { id: user._id, role: user.role },
+    secret,
+    { expiresIn: '24h' } // Token expires in 24 hours
+  );
 };
 
 /**
@@ -24,8 +32,12 @@ const generateToken = (user) => {
  * @throws {Error} If token is invalid or expired.
  */
 const verifyToken = (token) => {
-  // TODO: Verify signature and return decoded payload using jwt.verify
-  return null;
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET environment variable is missing.');
+  }
+
+  return jwt.verify(token, secret);
 };
 
 module.exports = {
