@@ -1,0 +1,16 @@
+/**
+ * @file TicketDetails.module.css
+ * @description TicketDetails page styles.
+ * @responsibility Formats form grids, edit/view container frames, and locked input visualizations.
+ */
+
+.detailsPage {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.disabledForm {
+  opacity: 0.8;
+  pointer-events: none;
+}

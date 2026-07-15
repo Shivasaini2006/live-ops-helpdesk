@@ -1,0 +1,15 @@
+/**
+ * @file Navbar.module.css
+ * @description Navbar layout styles.
+ * @responsibility Handles horizontal row spacing, brand heights, and sticky top placement.
+ */
+
+.navbar {
+  height: 60px;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}

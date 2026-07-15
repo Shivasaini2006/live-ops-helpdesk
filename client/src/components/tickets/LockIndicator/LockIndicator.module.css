@@ -1,0 +1,18 @@
+/**
+ * @file LockIndicator.module.css
+ * @description LockIndicator component styles.
+ * @responsibility Coordinates warning border colors, background pulses, and font layout styling.
+ */
+
+.indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--priority-critical);
+  border-radius: var(--radius-sm);
+  color: var(--priority-critical);
+  font-size: 12px;
+  font-weight: 500;
+}

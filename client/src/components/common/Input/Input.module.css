@@ -1,0 +1,21 @@
+/**
+ * @file Input.module.css
+ * @description Input component styles.
+ * @responsibility Handles input border colors, focus outlines, error highlights, and layout padding.
+ */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inputField {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
+}
+
+.inputField:focus {
+  border-color: var(--border-focus);
+}

@@ -1,0 +1,11 @@
+/**
+ * @file CreateTicket.module.css
+ * @description CreateTicket page styles.
+ * @responsibility Coordinates form width spacing, error label layouts, and action button alignment.
+ */
+
+.createPage {
+  padding: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}

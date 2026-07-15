@@ -1,0 +1,22 @@
+/**
+ * @file Button.module.css
+ * @description Button component styles.
+ * @responsibility Encapsulates hover states, animations, sizes, and colors for Button.
+ */
+
+.btn {
+  /* TODO: Base button styles using global variables */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.primary {
+  background-color: var(--bg-accent);
+  color: var(--text-primary);
+}
+
+.primary:hover {
+  background-color: var(--bg-accent-hover);
+}

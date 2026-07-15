@@ -1,0 +1,24 @@
+/**
+ * @file Login.module.css
+ * @description Login page styles.
+ * @responsibility Formats the login card with premium glassmorphic border styling and centered placement.
+ */
+
+.loginWrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, var(--bg-secondary), var(--bg-primary));
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}

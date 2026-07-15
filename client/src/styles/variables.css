@@ -1,0 +1,67 @@
+/**
+ * @file variables.css
+ * @description Centralized design tokens and CSS variables.
+ * @responsibility Establishes standard theme colors (HSL palettes), dark mode overrides, custom gradients, typography sizes, layout heights, and micro-animation transitions.
+ */
+
+:root {
+  /* Color Palette (HSL based for easy opacity manipulation) */
+  --hue-primary: 250; /* Indigo-ish */
+  --hue-success: 142; /* Emerald Green */
+  --hue-warning: 35;  /* Amber/Orange */
+  --hue-danger: 0;    /* Coral Red */
+  --hue-info: 200;    /* Sky Blue */
+
+  /* Dark Theme Palette Tokens */
+  --bg-primary: hsl(222, 47%, 11%);
+  --bg-secondary: hsl(222, 47%, 16%);
+  --bg-tertiary: hsl(222, 47%, 20%);
+  --bg-accent: hsl(var(--hue-primary), 60%, 55%);
+  --bg-accent-hover: hsl(var(--hue-primary), 65%, 60%);
+
+  /* Border and Outlines */
+  --border-color: hsl(222, 40%, 25%);
+  --border-focus: hsl(var(--hue-primary), 60%, 65%);
+
+  /* Typography Colors */
+  --text-primary: hsl(210, 40%, 98%);
+  --text-secondary: hsl(215, 20%, 75%);
+  --text-muted: hsl(215, 15%, 55%);
+  --text-inverse: hsl(222, 47%, 11%);
+
+  /* Status Colors */
+  --status-open: hsl(var(--hue-info), 80%, 45%);
+  --status-in-progress: hsl(var(--hue-warning), 85%, 50%);
+  --status-resolved: hsl(var(--hue-success), 70%, 40%);
+  --status-closed: hsl(215, 15%, 45%);
+
+  /* Priority Colors */
+  --priority-low: hsl(215, 15%, 55%);
+  --priority-medium: hsl(var(--hue-warning), 75%, 45%);
+  --priority-high: hsl(15, 80%, 50%);
+  --priority-critical: hsl(var(--hue-danger), 80%, 55%);
+
+  /* UI Tokens */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.35);
+
+  /* Transitions & Micro-Animations */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glassmorphism Preset utility variables */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}

@@ -1,0 +1,19 @@
+/**
+ * @file ConnectionBanner.module.css
+ * @description ConnectionBanner component styles.
+ * @responsibility Sets placement overlays, warning background transitions, and text centering.
+ */
+
+.banner {
+  width: 100%;
+  padding: 8px 16px;
+  background-color: var(--priority-critical);
+  color: var(--text-primary);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
