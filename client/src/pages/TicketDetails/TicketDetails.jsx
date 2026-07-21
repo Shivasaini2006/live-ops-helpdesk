@@ -92,15 +92,25 @@ const TicketDetails = () => {
     };
   }, [id, socket]);
 
-  // Clean up lock if user leaves the page while editing
+  // Automatically acquire lock on ticket when opened (once socket and ticket are ready)
   useEffect(() => {
-    return () => {
-      if (isEditing) {
-        // Silent unlock on navigation unmount
-        unlockTicket(id).catch(() => {});
+    if (!socket || !ticket) return;
+
+    const acquireInitialLock = async () => {
+      try {
+        await lockTicket(id, socket.id);
+      } catch (err) {
+        console.warn('Initial lock acquisition failed:', err.message);
       }
     };
-  }, [id, isEditing]);
+
+    acquireInitialLock();
+
+    return () => {
+      // Always release editing lock on unmount
+      unlockTicket(id).catch(() => {});
+    };
+  }, [id, socket, ticket]);
 
   const handleEditClick = async () => {
     setError('');
