@@ -7,7 +7,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: '/api', // Vite proxy routes /api requests to port 5000 in development
+  baseURL: import.meta.env.VITE_API_URL || '/api', // Dynamic for production Render deployment
   headers: {
     'Content-Type': 'application/json'
   }

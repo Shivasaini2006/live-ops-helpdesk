@@ -6,9 +6,8 @@
 
 import { io } from 'socket.io-client';
 
-// Establish connection setup with autoConnect disabled
-// It will be manually triggered when user logs in
-const socket = io('/', {
+const socketUrl = import.meta.env.VITE_SOCKET_URL || '/';
+const socket = io(socketUrl, {
   autoConnect: false,
   transports: ['websocket']
 });
