@@ -1,7 +1,7 @@
 /**
  * @file Dashboard.module.css
  * @description Dashboard page styles.
- * @responsibility Handles grid margins, responsive page padding, and grid alignment.
+ * @responsibility Handles grid margins, responsive page padding, and metrics panel cards layout.
  */
 
 .dashboardPage {
@@ -9,4 +9,58 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.metricCard {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  text-align: center;
+}
+
+.metricCard h3 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.metricCard p {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Accent borders based on status */
+.open {
+  border-left: 4px solid var(--status-open);
+  color: var(--status-open);
+}
+
+.progress {
+  border-left: 4px solid var(--status-in-progress);
+  color: var(--status-in-progress);
+}
+
+.resolved {
+  border-left: 4px solid var(--status-resolved);
+  color: var(--status-resolved);
+}
+
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px 0;
+  color: var(--text-secondary);
 }

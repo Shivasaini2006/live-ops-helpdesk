@@ -1,16 +1,18 @@
 /**
  * @file Footer.jsx
  * @description Standard layout footer panel.
- * @responsibility Renders copyright guidelines, versioning details, and status indicators references.
+ * @responsibility Renders copyright guidelines and versioning details.
  */
 
-// Placeholder for imports
-// import React from 'react';
-// import styles from './Footer.module.css';
+import React from 'react';
+import styles from './Footer.module.css';
 
 const Footer = () => {
-  // TODO: Render footer elements
-  return null;
+  return (
+    <footer className={styles.footer}>
+      <p>&copy; {new Date().getFullYear()} Live Ops Helpdesk. Real-Time Collaboration Desk.</p>
+    </footer>
+  );
 };
 
 export default Footer;

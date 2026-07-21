@@ -4,28 +4,64 @@
  * @responsibility Specifies constraints, required fields, and sanitization for ticket creation, updates, and lock requests.
  */
 
-// Placeholder for express-validator import
-// const { body, param } = require('express-validator');
+const { body, param } = require('express-validator');
 
 /**
  * Validation rules for ticket creation.
  */
 const createTicketRules = [
-  // TODO: Validate 'title', 'description' are not empty, 'status' and 'priority' are valid enums
+  body('title')
+    .notEmpty()
+    .withMessage('Title is required')
+    .trim()
+    .isLength({ max: 100 })
+    .withMessage('Title cannot exceed 100 characters'),
+  body('description')
+    .notEmpty()
+    .withMessage('Description is required')
+    .trim(),
+  body('status')
+    .optional()
+    .isIn(['open', 'in-progress', 'resolved', 'closed'])
+    .withMessage('Invalid ticket status'),
+  body('priority')
+    .optional()
+    .isIn(['low', 'medium', 'high', 'critical'])
+    .withMessage('Invalid ticket priority level')
 ];
 
 /**
  * Validation rules for ticket updates.
  */
 const updateTicketRules = [
-  // TODO: Validate ticket parameter ID, and optional 'title', 'description', 'status', 'priority'
+  param('id')
+    .isMongoId()
+    .withMessage('Invalid ticket identifier format'),
+  body('title')
+    .optional()
+    .trim()
+    .isLength({ max: 100 })
+    .withMessage('Title cannot exceed 100 characters'),
+  body('description')
+    .optional()
+    .trim(),
+  body('status')
+    .optional()
+    .isIn(['open', 'in-progress', 'resolved', 'closed'])
+    .withMessage('Invalid ticket status'),
+  body('priority')
+    .optional()
+    .isIn(['low', 'medium', 'high', 'critical'])
+    .withMessage('Invalid ticket priority level')
 ];
 
 /**
  * Validation rules for ticket lock requests.
  */
 const lockTicketRules = [
-  // TODO: Validate param ID of ticket
+  param('id')
+    .isMongoId()
+    .withMessage('Invalid ticket identifier format')
 ];
 
 module.exports = {

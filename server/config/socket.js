@@ -4,8 +4,9 @@
  * @responsibility Sets up Socket.io options, configures CORS for the socket server, and integrates the socket instance with the Node.js HTTP server.
  */
 
-// Placeholder for socket.io imports
-// const { Server } = require('socket.io');
+const { Server } = require('socket.io');
+
+let ioInstance = null;
 
 /**
  * Initializes and configures Socket.io on top of the provided HTTP server.
@@ -14,8 +15,21 @@
  * @returns {object} The configured Socket.io server instance.
  */
 const initSocket = (httpServer) => {
-  // TODO: Configure and return Socket.io Server instance
-  return null;
+  if (ioInstance) {
+    return ioInstance;
+  }
+
+  ioInstance = new Server(httpServer, {
+    cors: {
+      origin: process.env.CLIENT_URL || 'http://localhost:5173',
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      credentials: true
+    },
+    pingTimeout: 60000, // Timeout after 60 seconds of inactivity
+    transports: ['websocket', 'polling']
+  });
+
+  return ioInstance;
 };
 
 /**
@@ -24,8 +38,10 @@ const initSocket = (httpServer) => {
  * @throws {Error} If socket server is not initialized yet.
  */
 const getSocketIO = () => {
-  // TODO: Return active socket server instance
-  return null;
+  if (!ioInstance) {
+    throw new Error('Socket.io has not been initialized. Please call initSocket first.');
+  }
+  return ioInstance;
 };
 
 module.exports = {

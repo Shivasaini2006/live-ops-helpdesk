@@ -4,14 +4,22 @@
  * @responsibility Displays alert dialog when socket server is disconnected, prompting reconnection attempts.
  */
 
-// Placeholder for imports
-// import React from 'react';
-// import { useSocket } from '../../../hooks/useSocket';
-// import styles from './ConnectionBanner.module.css';
+import React from 'react';
+import useSocket from '../../../hooks/useSocket';
+import styles from './ConnectionBanner.module.css';
 
 const ConnectionBanner = () => {
-  // TODO: Retrieve isConnected from useSocket(), render banner if false
-  return null;
+  const socketContext = useSocket();
+  const isConnected = socketContext ? socketContext.isConnected : true;
+
+  if (isConnected) return null;
+
+  return (
+    <div className={styles.banner}>
+      <span className={styles.warningIcon}>⚠️</span>
+      <span>Connection lost. Attempting to reconnect to live updates server...</span>
+    </div>
+  );
 };
 
 export default ConnectionBanner;

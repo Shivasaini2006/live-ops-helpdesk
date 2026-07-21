@@ -1,16 +1,17 @@
 /**
  * @file StatusChip.jsx
  * @description Small pill chip to display ticket status.
- * @responsibility Maps status values to status-specific colors (e.g. open -> blue, in-progress -> orange).
+ * @responsibility Maps status values to status-specific colors.
  */
 
-// Placeholder for imports
-// import React from 'react';
-// import styles from './StatusChip.module.css';
+import React from 'react';
+import styles from './StatusChip.module.css';
 
-const StatusChip = ({ status, ...props }) => {
-  // TODO: Map status to appropriate CSS module class and render text
-  return null;
+const StatusChip = ({ status = 'open' }) => {
+  const normalizedStatus = status.toLowerCase();
+  const statusClass = `${styles.chip} ${styles[normalizedStatus] || ''}`;
+
+  return <span className={statusClass}>{status}</span>;
 };
 
 export default StatusChip;

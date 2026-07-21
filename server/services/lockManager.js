@@ -1,22 +1,46 @@
 /**
  * @file lockManager.js
  * @description In-memory ticket lock manager service to prevent race conditions during ticket edits.
- * @responsibility Tracks which tickets are locked by which agents, issues/releases locks, schedules automatic releases on disconnection or timeouts, and handles lock expirations.
+ * @responsibility Tracks which tickets are locked by which agents, issues/releases locks, and handles automatic release triggers.
  */
 
-// Placeholder for ticket constants, active socket registry, or database updates
-// const { TICKET_LOCK_DURATION_MS } = require('../constants/ticket.constants');
+const Ticket = require('../models/ticket.model');
+const { TICKET_LOCK_DURATION_MS } = require('../constants/ticket.constants');
+
+// In-memory registry of locks: ticketId -> { userId, socketId, expiresAt }
+const activeLocks = new Map();
 
 /**
  * Attempts to acquire a lock on a ticket for a specific agent.
  * @param {string} ticketId - ID of the ticket.
  * @param {string} userId - ID of the agent requesting the lock.
  * @param {string} socketId - Socket connection ID of the agent.
- * @returns {Promise<object>} Lock details if successful, or throws error if already locked by someone else.
+ * @returns {Promise<object>} Lock details if successful.
+ * @throws {Error} If already locked by someone else.
  */
 const acquireLock = async (ticketId, userId, socketId) => {
-  // TODO: Lock acquiring logic
-  return null;
+  const now = new Date();
+  const existingLock = activeLocks.get(ticketId);
+
+  // Check if lock exists in memory and is still active (not expired)
+  if (existingLock && existingLock.userId !== userId && existingLock.expiresAt > now) {
+    throw new Error('Ticket is already locked by another agent.');
+  }
+
+  const expiresAt = new Date(now.getTime() + TICKET_LOCK_DURATION_MS);
+  const lockDetails = { userId, socketId, expiresAt };
+
+  // Set in-memory lock
+  activeLocks.set(ticketId, lockDetails);
+
+  // Sync to database for fallback persistence
+  await Ticket.findByIdAndUpdate(ticketId, {
+    lockedBy: userId,
+    lockedAt: now,
+    lockExpiresAt: expiresAt
+  });
+
+  return lockDetails;
 };
 
 /**
@@ -26,8 +50,24 @@ const acquireLock = async (ticketId, userId, socketId) => {
  * @returns {Promise<boolean>} True if release was successful.
  */
 const releaseLock = async (ticketId, userId) => {
-  // TODO: Lock release logic
-  return false;
+  const existingLock = activeLocks.get(ticketId);
+
+  // If no lock or owned by someone else, prevent release
+  if (existingLock && existingLock.userId !== userId) {
+    throw new Error('You do not own the lock on this ticket.');
+  }
+
+  // Clear in-memory
+  activeLocks.delete(ticketId);
+
+  // Clear database
+  await Ticket.findByIdAndUpdate(ticketId, {
+    lockedBy: null,
+    lockedAt: null,
+    lockExpiresAt: null
+  });
+
+  return true;
 };
 
 /**
@@ -37,8 +77,24 @@ const releaseLock = async (ticketId, userId) => {
  * @returns {Promise<Array<string>>} List of released ticket IDs.
  */
 const releaseLocksBySocket = async (socketId) => {
-  // TODO: Scan active locks and release those associated with socketId
-  return [];
+  const releasedTickets = [];
+  const now = new Date();
+
+  for (const [ticketId, lockDetails] of activeLocks.entries()) {
+    if (lockDetails.socketId === socketId) {
+      activeLocks.delete(ticketId);
+      releasedTickets.push(ticketId);
+
+      // Sync release to DB
+      await Ticket.findByIdAndUpdate(ticketId, {
+        lockedBy: null,
+        lockedAt: null,
+        lockExpiresAt: null
+      });
+    }
+  }
+
+  return releasedTickets;
 };
 
 /**
@@ -47,8 +103,16 @@ const releaseLocksBySocket = async (socketId) => {
  * @returns {Promise<boolean>} True if locked.
  */
 const isLocked = async (ticketId) => {
-  // TODO: Check lock state
-  return false;
+  const lock = activeLocks.get(ticketId);
+  if (!lock) return false;
+
+  const now = new Date();
+  if (lock.expiresAt < now) {
+    activeLocks.delete(ticketId);
+    return false;
+  }
+
+  return true;
 };
 
 module.exports = {

@@ -17,10 +17,20 @@ export const validateEmail = (email) => {
 /**
  * Checks ticket input fields.
  * @param {object} ticketData - Form attributes payload.
- * @returns {object} Errors object mapping field keys to warning messages (if any).
+ * @returns {object} Errors object mapping field keys to warning messages.
  */
 export const validateTicketForm = (ticketData) => {
   const errors = {};
-  // TODO: Run checks on ticketData.title and ticketData.description
+  
+  if (!ticketData.title || ticketData.title.trim() === '') {
+    errors.title = 'Title is required';
+  } else if (ticketData.title.length > 100) {
+    errors.title = 'Title cannot exceed 100 characters';
+  }
+
+  if (!ticketData.description || ticketData.description.trim() === '') {
+    errors.description = 'Description is required';
+  }
+
   return errors;
 };

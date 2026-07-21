@@ -1,11 +1,10 @@
 /**
  * @file authApi.js
  * @description API service calls mapper for authentication endpoints.
- * @responsibility Wraps Axios calls to /auth endpoints (login, register, fetch current user info) into exportable functions.
+ * @responsibility Wraps Axios calls to /auth endpoints into exportable functions.
  */
 
-// Placeholder for axios client import
-// import axiosInstance from './axios';
+import axiosInstance from './axios';
 
 /**
  * Sends a user credentials payload to authenticate and receive a token.
@@ -13,8 +12,18 @@
  * @returns {Promise<object>} Authenticated session API response payload.
  */
 export const loginUser = async (credentials) => {
-  // TODO: Call axiosInstance.post('/auth/login', credentials)
-  return null;
+  const response = await axiosInstance.post('/auth/login', credentials);
+  return response.data;
+};
+
+/**
+ * Sends a user payload to create a new agent.
+ * @param {object} userData - Agent registration details.
+ * @returns {Promise<object>} Authenticated session API response.
+ */
+export const registerUser = async (userData) => {
+  const response = await axiosInstance.post('/auth/register', userData);
+  return response.data;
 };
 
 /**
@@ -22,6 +31,6 @@ export const loginUser = async (credentials) => {
  * @returns {Promise<object>} Current user authentication profile.
  */
 export const getMe = async () => {
-  // TODO: Call axiosInstance.get('/auth/me')
-  return null;
+  const response = await axiosInstance.get('/auth/me');
+  return response.data;
 };

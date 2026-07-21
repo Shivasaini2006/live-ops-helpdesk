@@ -4,21 +4,69 @@
  * @responsibility Manages the user state, session recovery from localStorage tokens, login actions, and logout procedures.
  */
 
-// Placeholder for react imports
-// import React, { createContext, useState, useEffect } from 'react';
-// import { loginUser, getMe } from '../api/authApi';
+import React, { createContext, useState, useEffect } from 'react';
+import { loginUser, getMe } from '../api/authApi';
 
-// TODO: Create the Auth context
-// export const AuthContext = createContext(null);
+export const AuthContext = createContext(null);
 
-/**
- * Bootstraps and provides session context.
- * @param {object} props - Component props containing children.
- */
 export const AuthProvider = ({ children }) => {
-  // TODO: Define states: user, loading, error
-  // TODO: Check localStorage for token and call getMe() on mount to restore session
-  // TODO: Expose login(credentials), logout() methods
-  
-  return null; // Should return <AuthContext.Provider value={{ user, login, logout, loading }}>{children}</AuthContext.Provider>
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const bootstrapAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await getMe();
+        if (response.success) {
+          setUser(response.data.user);
+        }
+      } catch (err) {
+        console.warn('Failed to restore session. Token may be expired.');
+        localStorage.removeItem('token');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    bootstrapAuth();
+  }, []);
+
+  const login = async (email, password) => {
+    setError(null);
+    setLoading(true);
+    try {
+      const response = await loginUser({ email, password });
+      if (response.success) {
+        const { token, user: userData } = response.data;
+        localStorage.setItem('token', token);
+        setUser(userData);
+        return true;
+      }
+    } catch (err) {
+      const errMsg = err.response?.data?.message || 'Login failed';
+      setError(errMsg);
+      throw new Error(errMsg);
+    } finally {
+      setLoading(false);
+    }
+    return false;
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout, loading, error }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

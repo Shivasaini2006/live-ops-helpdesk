@@ -1,11 +1,11 @@
 /**
  * @file NotFound.module.css
  * @description NotFound page styles.
- * @responsibility Handles page center spacing alignment and typographic styling for error messages.
+ * @responsibility Handles page center spacing alignment and typographic styling.
  */
 
 .notFoundWrapper {
-  min-height: 100vh;
+  min-height: calc(100vh - 100px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,4 +13,22 @@
   text-align: center;
   gap: 16px;
   padding: 24px;
+}
+
+.errorIcon {
+  font-size: 64px;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.description {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 360px;
+  margin-bottom: 12px;
 }

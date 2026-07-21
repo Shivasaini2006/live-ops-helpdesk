@@ -4,17 +4,17 @@
  * @responsibility Renders visual indicator to indicate fetching/saving operations are in progress.
  */
 
-// Placeholder for imports
-// import React from 'react';
-// import styles from './Loader.module.css';
+import React from 'react';
+import styles from './Loader.module.css';
 
 /**
  * Custom Loader component.
  * @param {object} props - Component properties.
  */
-const Loader = ({ size = 'medium', ...props }) => {
-  // TODO: Render a spinning circle element
-  return null;
+const Loader = ({ size = 'medium', className = '', ...props }) => {
+  const loaderClass = `${styles.spinner} ${styles[size]} ${className}`;
+
+  return <div className={loaderClass} {...props} />;
 };
 
 export default Loader;

@@ -1,11 +1,4 @@
-/**
- * @file useDebounce.js
- * @description Hook that delays updating a value until a set amount of time has elapsed.
- * @responsibility Useful for debouncing real-time searches or text inputs to limit network traffic or socket updates.
- */
-
-// Placeholder for react hooks imports
-// import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * Returns a debounced representation of the provided value.
@@ -14,8 +7,19 @@
  * @returns {any} The debounced value.
  */
 const useDebounce = (value, delay) => {
-  // TODO: Implement state/useEffect timeout updates
-  return value;
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
 };
 
 export default useDebounce;

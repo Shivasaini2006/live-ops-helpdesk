@@ -1,16 +1,22 @@
 /**
  * @file Header.jsx
  * @description Standard page sub-header component.
- * @responsibility Renders title, breadcrumbs, and primary page action buttons (e.g., Create Ticket button).
+ * @responsibility Renders title, subtitle, and action controls on top of page content templates.
  */
 
-// Placeholder for imports
-// import React from 'react';
-// import styles from './Header.module.css';
+import React from 'react';
+import styles from './Header.module.css';
 
 const Header = ({ title, subtitle, actions }) => {
-  // TODO: Render headers and title
-  return null;
+  return (
+    <div className={styles.headerContainer}>
+      <div className={styles.meta}>
+        <h1 className={styles.title}>{title}</h1>
+        {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+      </div>
+      {actions && <div className={styles.actions}>{actions}</div>}
+    </div>
+  );
 };
 
 export default Header;

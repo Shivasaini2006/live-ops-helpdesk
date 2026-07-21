@@ -6,13 +6,11 @@
 
 const express = require('express');
 const authRoutes = require('./auth.routes');
+const ticketRoutes = require('./ticket.routes');
 
 const router = express.Router();
 
 router.use('/auth', authRoutes);
-
-// TODO: Mount ticket routes once implemented
-// const ticketRoutes = require('./ticket.routes');
-// router.use('/tickets', ticketRoutes);
+router.use('/tickets', ticketRoutes);
 
 module.exports = router;

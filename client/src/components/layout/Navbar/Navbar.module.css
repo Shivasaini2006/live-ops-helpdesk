@@ -12,4 +12,78 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.brand {
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(45deg, hsl(var(--hue-primary), 80%, 65%), hsl(var(--hue-info), 80%, 60%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.indicatorWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--bg-tertiary);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+}
+
+.online {
+  background-color: var(--status-resolved);
+  box-shadow: 0 0 8px var(--status-resolved);
+}
+
+.offline {
+  background-color: var(--priority-critical);
+  box-shadow: 0 0 8px var(--priority-critical);
+}
+
+.statusText {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.role {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 500;
 }

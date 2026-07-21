@@ -1,7 +1,7 @@
 /**
  * @file statusHelpers.js
  * @description Helper functions for resolving ticket states.
- * @responsibility Provides convenience helpers to map statuses and priorities to CSS/class labels or color schemes.
+ * @responsibility Provides convenience helpers to map statuses and priorities to color variables or labels.
  */
 
 /**
@@ -10,8 +10,18 @@
  * @returns {string} CSS custom property color value.
  */
 export const getPriorityColor = (priority) => {
-  // TODO: Return priority mapping matching CSS variables
-  return 'var(--priority-low)';
+  const p = priority ? priority.toLowerCase() : 'low';
+  switch (p) {
+    case 'critical':
+      return 'var(--priority-critical)';
+    case 'high':
+      return 'var(--priority-high)';
+    case 'medium':
+      return 'var(--priority-medium)';
+    case 'low':
+    default:
+      return 'var(--priority-low)';
+  }
 };
 
 /**
@@ -20,6 +30,14 @@ export const getPriorityColor = (priority) => {
  * @returns {string} Human-readable representation label.
  */
 export const getStatusLabel = (status) => {
-  // TODO: Return mapping label
-  return '';
+  const s = status ? status.toLowerCase() : 'open';
+  switch (s) {
+    case 'in-progress':
+      return 'In Progress';
+    case 'open':
+    case 'resolved':
+    case 'closed':
+    default:
+      return s.charAt(0).toUpperCase() + s.slice(1);
+  }
 };

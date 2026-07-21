@@ -10,7 +10,153 @@
   margin: 0 auto;
 }
 
-.disabledForm {
-  opacity: 0.8;
-  pointer-events: none;
+.card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.lockNotice {
+  margin-bottom: 12px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.readField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.readTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.metaRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.metaField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.select {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.select:focus {
+  border-color: var(--border-focus);
+}
+
+.textareaWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.textarea {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 12px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  transition: border-color var(--transition-fast);
+}
+
+.textarea:focus {
+  border-color: var(--border-focus);
+}
+
+.readDesc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  white-space: pre-wrap;
+}
+
+.actionsRow {
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
+  margin-top: 12px;
+}
+
+.editActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.viewActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.controlButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.errorAlert {
+  background-color: rgba(255, 75, 75, 0.1);
+  border: 1px solid var(--priority-critical);
+  border-radius: var(--radius-sm);
+  color: var(--priority-critical);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 80px 0;
+  text-align: center;
+  color: var(--text-secondary);
 }

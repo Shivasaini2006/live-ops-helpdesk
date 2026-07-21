@@ -9,16 +9,59 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at top, var(--bg-secondary), var(--bg-primary));
+  background: radial-gradient(circle at center, var(--bg-secondary), var(--bg-primary));
+  padding: 24px;
 }
 
 .loginCard {
   width: 100%;
   max-width: 400px;
-  padding: 32px;
+  padding: 40px 32px;
   background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  text-align: center;
+}
+
+.logoTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: linear-gradient(45deg, hsl(var(--hue-primary), 80%, 65%), hsl(var(--hue-info), 80%, 60%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
+}
+
+.logoSubtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.errorAlert {
+  background-color: rgba(255, 75, 75, 0.1);
+  border: 1px solid var(--priority-critical);
+  border-radius: var(--radius-sm);
+  color: var(--priority-critical);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
 }

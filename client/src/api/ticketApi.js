@@ -1,64 +1,65 @@
 /**
  * @file ticketApi.js
  * @description API service calls mapper for ticket endpoints.
- * @responsibility Wraps Axios requests to /tickets endpoints (list, get, create, edit, delete, lock, unlock) into clean, async helper functions.
+ * @responsibility Wraps Axios requests to /tickets endpoints into clean, async helper functions.
  */
 
-// Placeholder for axios client import
-// import axiosInstance from './axios';
+import axiosInstance from './axios';
 
 /**
  * Fetches all tickets list.
  */
 export const getTickets = async () => {
-  // TODO: Call axiosInstance.get('/tickets')
-  return null;
+  const response = await axiosInstance.get('/tickets');
+  return response.data;
 };
 
 /**
  * Fetches a single ticket details.
  */
 export const getTicketById = async (id) => {
-  // TODO: Call axiosInstance.get(`/tickets/${id}`)
-  return null;
+  const response = await axiosInstance.get(`/tickets/${id}`);
+  return response.data;
 };
 
 /**
  * Submits a new ticket payload.
  */
 export const createTicket = async (ticketData) => {
-  // TODO: Call axiosInstance.post('/tickets', ticketData)
-  return null;
+  const response = await axiosInstance.post('/tickets', ticketData);
+  return response.data;
 };
 
 /**
  * Saves modifications to an existing ticket.
  */
 export const updateTicket = async (id, ticketData) => {
-  // TODO: Call axiosInstance.put(`/tickets/${id}`, ticketData)
-  return null;
+  const response = await axiosInstance.put(`/tickets/${id}`, ticketData);
+  return response.data;
 };
 
 /**
  * Triggers deletion for a single ticket.
  */
 export const deleteTicket = async (id) => {
-  // TODO: Call axiosInstance.delete(`/tickets/${id}`)
-  return null;
+  const response = await axiosInstance.delete(`/tickets/${id}`);
+  return response.data;
 };
 
 /**
  * Requests an editing lock on a ticket.
+ * @param {string} id - Ticket ID
+ * @param {string} socketId - Client socket ID
  */
-export const lockTicket = async (id) => {
-  // TODO: Call axiosInstance.post(`/tickets/${id}/lock`)
-  return null;
+export const lockTicket = async (id, socketId) => {
+  const response = await axiosInstance.post(`/tickets/${id}/lock`, { socketId });
+  return response.data;
 };
 
 /**
  * Releases an editing lock on a ticket.
  */
 export const unlockTicket = async (id) => {
-  // TODO: Call axiosInstance.post(`/tickets/${id}/unlock`)
-  return null;
+  const response = await axiosInstance.post(`/tickets/${id}/unlock`);
+  return response.data;
 };

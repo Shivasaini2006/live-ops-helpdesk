@@ -4,22 +4,60 @@
  * @responsibility Manages connection/disconnection notifications, listener registry, and triggers socket connect/disconnect on login state changes.
  */
 
-// Placeholder for react imports and socket instance
-// import React, { createContext, useEffect, useState } from 'react';
-// import socket from '../services/socket';
-// import { useAuth } from '../hooks/useAuth';
+import React, { createContext, useEffect, useState } from 'react';
+import socket from '../services/socket';
+import useAuth from '../hooks/useAuth';
 
-// TODO: Create the Socket context
-// export const SocketContext = createContext(null);
+export const SocketContext = createContext(null);
 
-/**
- * Socket listener lifecycle manager provider.
- * @param {object} props - Component props containing children.
- */
 export const SocketProvider = ({ children }) => {
-  // TODO: Define states: isConnected, socketInstance
-  // TODO: React to user login state: if logged in, trigger socket.connect(), else socket.disconnect()
-  // TODO: Setup event listeners for standard connection statuses ('connect', 'disconnect', 'connect_error')
-  
-  return null; // Should return <SocketContext.Provider value={{ socket, isConnected }}>{children}</SocketContext.Provider>
+  const [isConnected, setIsConnected] = useState(socket.connected);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) {
+      if (socket.connected) {
+        socket.disconnect();
+      }
+      return;
+    }
+
+    // Connect socket on user authentication
+    socket.connect();
+
+    const handleConnect = () => {
+      setIsConnected(true);
+      console.log('Socket connected successfully');
+    };
+
+    const handleDisconnect = () => {
+      setIsConnected(false);
+      console.log('Socket disconnected');
+    };
+
+    const handleConnectError = (error) => {
+      setIsConnected(false);
+      console.error('Socket connection error:', error);
+    };
+
+    socket.on('connect', handleConnect);
+    socket.on('disconnect', handleDisconnect);
+    socket.on('connect_error', handleConnectError);
+
+    // Initial check
+    setIsConnected(socket.connected);
+
+    return () => {
+      socket.off('connect', handleConnect);
+      socket.off('disconnect', handleDisconnect);
+      socket.off('connect_error', handleConnectError);
+      socket.disconnect();
+    };
+  }, [user]);
+
+  return (
+    <SocketContext.Provider value={{ socket, isConnected }}>
+      {children}
+    </SocketContext.Provider>
+  );
 };

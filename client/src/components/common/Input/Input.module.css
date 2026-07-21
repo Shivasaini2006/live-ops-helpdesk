@@ -7,15 +7,48 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  width: 100%;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
 }
 
 .inputField {
+  width: 100%;
+  padding: 10px 14px;
+  background-color: var(--bg-tertiary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
-  transition: border-color var(--transition-fast);
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.inputField::placeholder {
+  color: var(--text-muted);
 }
 
 .inputField:focus {
   border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px rgba(110, 89, 255, 0.2);
+}
+
+.inputError {
+  border-color: var(--priority-critical);
+}
+
+.inputError:focus {
+  border-color: var(--priority-critical);
+  box-shadow: 0 0 0 2px rgba(255, 75, 75, 0.2);
+}
+
+.errorText {
+  font-size: 12px;
+  color: var(--priority-critical);
+  font-weight: 500;
 }

@@ -4,17 +4,39 @@
  * @responsibility Standardizes textual user inputs, providing labels, error boundary styling, focus highlights, and form alignment.
  */
 
-// Placeholder for imports
-// import React from 'react';
-// import styles from './Input.module.css';
+import React from 'react';
+import styles from './Input.module.css';
 
 /**
  * Custom Input component.
  * @param {object} props - Component properties.
  */
-const Input = ({ label, error, ...props }) => {
-  // TODO: Build input tag wrapped in label and error elements
-  return null;
+const Input = ({
+  label,
+  error,
+  type = 'text',
+  id,
+  className = '',
+  ...props
+}) => {
+  const inputClass = `${styles.inputField} ${error ? styles.inputError : ''} ${className}`;
+
+  return (
+    <div className={styles.wrapper}>
+      {label && (
+        <label htmlFor={id} className={styles.label}>
+          {label}
+        </label>
+      )}
+      <input
+        type={type}
+        id={id}
+        className={inputClass}
+        {...props}
+      />
+      {error && <span className={styles.errorText}>{error}</span>}
+    </div>
+  );
 };
 
 export default Input;
